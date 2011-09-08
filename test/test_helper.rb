@@ -9,4 +9,6 @@ class Person < OpenStruct
   validates :phone, mask: "(99) 9999-9999"
   validates :acronym, mask: "***"
   validates :alphanumeric, mask: "aaa999"
+  validates :post_code, mask: "99999", allow_blank: false
+  validates :fax, mask: "(99) 9999-9999", allow_nil: false
 end
