@@ -15,14 +15,16 @@ class MaskValidator < ActiveModel::EachValidator
   #
   # TODO: refactoring
   def validate_each(record, attribute, value)
-    return true if value.nil? || value.empty?
+    return record.errors.add(attribute, :blank) if options.include?(:allow_nil) && options[:allow_nil] == false && value.nil?
+    return record.errors.add(attribute, :empty) if options.include?(:allow_blank) && options[:allow_blank] == false && !value.nil? && value.empty?
+    return true if value.nil? || value.blank?
 
     definitions = { "9" => "[0-9]", "a" => "[a-zA-Z]", "*" => "[a-zA-Z0-9]" }
     regex = /#{(options[:with].to_s.each_char.collect { |char| definitions[char] || "\\#{char}" }).join}/
 
     match = value.match(regex)
     unless match && match.to_s == value
-      record.errors.add(attribute, options[:message])
+      record.errors.add(attribute, options[:message], options)
     end
   end
 end
