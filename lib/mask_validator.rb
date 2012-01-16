@@ -16,11 +16,15 @@ class MaskValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     value = converted_value(value)
 
-    return record.errors.add(attribute, :blank) if options.include?(:allow_nil) && options[:allow_nil] == false && value.nil?
-    return record.errors.add(attribute, :empty) if options.include?(:allow_blank) && options[:allow_blank] == false && value.blank?
-    return if value.blank?
+    if value.nil?
+      record.errors.add(attribute, :blank) unless allow_nil?
+    end
 
-    return record.errors.add(attribute, options[:message], options) unless value.match(regexp)
+    if value.blank?
+      record.errors.add(attribute, :empty) unless allow_blank?
+    else
+      record.errors.add(attribute, message, options) unless value.match(regexp)
+    end
   end
 
   #
@@ -58,5 +62,19 @@ class MaskValidator < ActiveModel::EachValidator
     else
       I18n.l(value, :format => :mask)
     end
+  end
+
+  private
+
+  def message
+    options[:message]
+  end
+
+  def allow_nil?
+    options.include?(:allow_nil) && options[:allow_nil] == false ? false : true
+  end
+
+  def allow_blank?
+    options.include?(:allow_blank) && options[:allow_blank] == false ? false : true
   end
 end
