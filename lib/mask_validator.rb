@@ -23,7 +23,7 @@ class MaskValidator < ActiveModel::EachValidator
     if value.blank?
       record.errors.add(attribute, :empty) unless allow_blank?
     else
-      record.errors.add(attribute, message, options) unless value.match(regexp)
+      record.errors.add(attribute, message, options) unless value.to_s.match(regexp)
     end
   end
 

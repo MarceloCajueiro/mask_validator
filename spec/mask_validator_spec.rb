@@ -143,7 +143,7 @@ describe MaskValidator do
     end
 
     it "should not be valid with a wrong birth year" do
-      subject.birth_year = "20110"
+      subject.birth_year = 20110
       subject.should be_invalid
     end
 
@@ -153,7 +153,7 @@ describe MaskValidator do
     end
 
     it "should not be valid with a wrong body fat" do
-      subject.birth_time = "333,00%"
+      subject.birth_time = 333.00
       subject.should be_invalid
     end
   end
