@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe MaskValidator do
-
   subject do
     Person.new :phone => '(12) 3456-7890',
                :fax => '(12) 3456-7890',
@@ -9,7 +8,9 @@ describe MaskValidator do
                :alphanumeric => 'AAA666',
                :zip_code => '88900-000',
                :birth_date => '13/10/1989',
-               :birth_time => '10:20'
+               :birth_time => '10:20',
+               :birth_year => '2011',
+               :body_fat => '23,44'
   end
 
   it "Person should be valid" do
@@ -132,6 +133,28 @@ describe MaskValidator do
     it "should be valid with an empty fax" do
       subject.fax = ''
       subject.should be_valid
+    end
+  end
+
+  context "when the attributes type is not a string" do
+    it "should not be valid with a wrong date format" do
+      subject.birth_date = "15-12-2009"
+      subject.should be_invalid
+    end
+
+    it "should not be valid with a wrong birth year" do
+      subject.birth_year = "20110"
+      subject.should be_invalid
+    end
+
+    it "should not be valid with a wrong birth time" do
+      subject.birth_time = "333:20"
+      subject.should be_invalid
+    end
+
+    it "should not be valid with a wrong body fat" do
+      subject.birth_time = "333,00%"
+      subject.should be_invalid
     end
   end
 end
