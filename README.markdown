@@ -2,7 +2,9 @@
 
 This gem was inspired in the Sobrinho's gems to validate simple things inside of ActiveModel.
 
-Use mask in inputs and validate then in the models.
+Use mask in inputs and validate in the models.
+
+The gem works getting the value before type cast and comparing with a regexp from the mask pattern.
 
 ## Installation
 
