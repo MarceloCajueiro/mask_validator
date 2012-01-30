@@ -16,5 +16,7 @@ ActiveRecord::Schema.define do
     t.integer    :birth_year
     t.date       :birth_date
     t.datetime   :birth_time
+    t.string     :custom
+    t.string     :identification
   end
 end

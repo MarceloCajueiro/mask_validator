@@ -23,24 +23,43 @@ class MaskValidator < ActiveModel::EachValidator
     if value.blank?
       record.errors.add(attribute, :empty) unless allow_blank?
     else
-      record.errors.add(attribute, message, options) unless value.to_s.match(regexp)
+      record.errors.add(attribute, message, options) unless value.to_s.match regexp(record)
     end
   end
 
   #
   # Transform the string in a regular expression:
   #
-  #   options[:with] = "9a"
+  #   mask_value_for(record) => "9a"
   #
   #   regexp #=> /[0-9][a-zA-Z]/
   #
   # TODO: improve this
-  def regexp
-    /\A#{(options[:with].to_s.each_char.collect { |char| character_map[char] || "\\#{char}" }).join}\z/
+  def regexp(record=nil)
+    /\A#{(mask_value_for(record).to_s.each_char.collect { |char| character_map[char] || "\\#{char}" }).join}\z/
   end
 
   def character_map
     { "9" => "[0-9]", "a" => "[a-zA-Z]", "*" => "[a-zA-Z0-9]" }
+  end
+
+  #
+  # Evaluate the options[:with] according with its class:
+  #
+  #   options[:with] = :custom_mask
+  #   options[:with] = Proc.new {|o| o.custom_mask}
+  #   options[:with] = "9a"
+  #
+  # TODO: improve this
+  def mask_value_for(record=nil)
+    case options[:with]
+    when String
+      options[:with]
+    when Proc
+      options[:with].call(record)
+    when Symbol
+      record.send(options[:with])
+    end
   end
 
   private
