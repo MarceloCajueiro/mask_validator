@@ -10,7 +10,9 @@ describe MaskValidator do
                :birth_date => '13/10/1989',
                :birth_time => '10:20',
                :birth_year => '2011',
-               :body_fat => '23,44'
+               :body_fat => '23,44',
+               :custom => '989.78',
+               :identification => '53.86'
   end
 
   it "Person should be valid" do
@@ -155,6 +157,36 @@ describe MaskValidator do
     it "should not be valid with a wrong body fat" do
       subject.birth_time = 333.00
       subject.should be_invalid
+    end
+  end
+
+  # validates :custom, :mask => :custom_mask, :allow_blank => false
+  context "mask validation to custom field using custom_mask method" do
+    it "should be valid with an correct custom value" do
+      subject.stub!(:custom_mask => "99999-999")
+      subject.custom = '32632-567'
+      subject.should be_valid
+    end
+
+    it "should not be valid with an empty custom value" do
+      subject.stub!(:custom_mask => "9.9.9")
+      subject.custom = ''
+      subject.should_not be_valid
+    end
+  end
+
+  # validates :identification, :mask => Proc.new{|o| o.proc_mask}, :allow_blank => false
+  context "mask validation to proc field using a Proc" do
+    it "should be valid with an correct value" do
+      subject.stub!(:proc_mask => "999.9.99")
+      subject.identification = '326.3.67'
+      subject.should be_valid
+    end
+
+    it "should not be valid with an empty value" do
+      subject.stub!(:prock_mask => "9.9.9")
+      subject.identification = ''
+      subject.should_not be_valid
     end
   end
 end
