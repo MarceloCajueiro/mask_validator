@@ -18,6 +18,10 @@ Use the github version until a really stable version be released.
 
 `validates :acronym, mask: "***"`
 
+`validates :acronym, mask: :custom_method`
+
+`validates :acronym, mask: Proc.new{|o| o.custom_method}`
+
 * a - Represents an alpha character (A-Z,a-z)
 * 9 - Represents a numeric character (0-9)
 * * - Represents an alphanumeric character (A-Z,a-z,0-9)
