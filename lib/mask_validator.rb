@@ -13,18 +13,18 @@ class MaskValidator < ActiveModel::EachValidator
   #   9 - to numbers (0-9)
   #   * - to alphanumerics (A-Z, a-z, 0-9)
   #
+  def initialize(options)
+    @allow_nil, @allow_blank = options.delete(:allow_nil), options.delete(:allow_blank)
+
+    super
+  end
+
   def validate_each(record, attribute, value)
     value = record.send("#{attribute.to_s}_before_type_cast")
 
-    if value.nil?
-      record.errors.add(attribute, :blank) unless allow_nil?
-    end
+    return if (@allow_nil && value.nil?) || (@allow_blank && value.blank?)
 
-    if value.blank?
-      record.errors.add(attribute, :empty) unless allow_blank?
-    else
-      record.errors.add(attribute, message, options) unless value.to_s.match regexp(record)
-    end
+    record.errors.add(attribute, message, options) unless value.to_s.match regexp(record)
   end
 
   #
@@ -66,13 +66,5 @@ class MaskValidator < ActiveModel::EachValidator
 
   def message
     options[:message]
-  end
-
-  def allow_nil?
-    options.include?(:allow_nil) && options[:allow_nil] == false ? false : true
-  end
-
-  def allow_blank?
-    options.include?(:allow_blank) && options[:allow_blank] == false ? false : true
   end
 end
