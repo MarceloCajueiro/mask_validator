@@ -155,7 +155,7 @@ describe MaskValidator do
     end
 
     it "should not be valid with a wrong body fat" do
-      subject.birth_time = 333.00
+      subject.body_fat = 333.00
       subject.should be_invalid
     end
   end
