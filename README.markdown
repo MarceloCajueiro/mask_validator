@@ -10,7 +10,7 @@ The gem works getting the value before type cast and comparing with a regexp fro
 
 Use the github version until a really stable version be released.
 
-`gem "mask_validator", :git => "git://github.com/MarceloCajueiro/mask_validator.git"`
+`gem "mask_validator", "0.2.1"
 
 ## Usage:
 
