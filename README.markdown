@@ -10,13 +10,15 @@ Put `gem "mask_validator", "0.2.1"` in the Gemfile
 
 ## Usage
 
-`validates :phone, :mask => "(99) 9999-9999"`
+```ruby
+validates :phone, :mask => "(99) 9999-9999"
 
-`validates :acronym, :mask => "***"`
+validates :acronym, :mask => "***"
 
-`validates :acronym, :mask => :custom_method`
+validates :acronym, :mask => :custom_method
 
-`validates :acronym, :mask => Proc.new { |o| o.custom_method }`
+validates :acronym, :mask => Proc.new { |o| o.custom_method }
+```
 
 * a - Represents an alpha character (A-Z, a-z)
 * 9 - Represents a numeric character (0-9)
@@ -30,7 +32,9 @@ Use a little trick to call the masked input (jquery plugin) only defining the va
 
 In other words, defining:
 
-`validates :phone, :mask => "(99) 9999-9999"`
+```ruby
+validates :phone, :mask => "(99) 9999-9999"
+```
 
 It is the only necessary thing to apply the masked input.
 
