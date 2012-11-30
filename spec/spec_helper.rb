@@ -5,6 +5,7 @@ require 'mask_validator'
 
 require "support/db/schema"
 require "support/models/person"
+require "support/models/no_active_record_person"
 
 RSpec::Matchers.define :have_valid_value_to do |attribute|
   match do |actual|

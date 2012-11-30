@@ -20,7 +20,7 @@ class MaskValidator < ActiveModel::EachValidator
   end
 
   def validate_each(record, attribute, value)
-    value = record.send("#{attribute.to_s}_before_type_cast")
+    value = normalize_value(record, attribute, value)
 
     return if (@allow_nil && value.nil?) || (@allow_blank && value.blank?)
 
@@ -66,5 +66,15 @@ class MaskValidator < ActiveModel::EachValidator
 
   def message
     options[:message]
+  end
+
+  def normalize_value(record, attribute, value)
+    attribute_before_type_cast = "#{attribute.to_s}_before_type_cast"
+
+    if record.respond_to?(attribute_before_type_cast)
+      value = record.send(attribute_before_type_cast)
+    end
+
+    value
   end
 end
