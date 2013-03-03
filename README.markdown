@@ -1,5 +1,7 @@
 # Mask Validator
 
+[![Gem Version](https://badge.fury.io/rb/mask_validator.png)](http://badge.fury.io/rb/mask_validator)
+
 This gem was inspired in the Sobrinho's gems to validate simple things inside of ActiveModel.
 
 The gem works getting the value before type cast and comparing with a regular expression from the parse of mask pattern.
