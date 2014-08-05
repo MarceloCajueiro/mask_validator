@@ -65,7 +65,7 @@ class MaskValidator < ActiveModel::EachValidator
   private
 
   def message
-    options[:message]
+    options[:message] || :invalid
   end
 
   def normalize_value(record, attribute, value)
