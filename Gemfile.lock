@@ -50,6 +50,6 @@ PLATFORMS
 
 DEPENDENCIES
   mask_validator!
-  rake (>= 0.8.7)
+  rake
   rspec
   sqlite3
