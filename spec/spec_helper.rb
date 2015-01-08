@@ -14,11 +14,11 @@ RSpec::Matchers.define :have_valid_value_to do |attribute|
     !actual.errors[attribute].include?("is invalid")
   end
 
-  failure_message_for_should do |actual|
+  failure_message do |actual|
     "expected that the #{attribute} attribute would be valid"
   end
 
-  failure_message_for_should_not do |actual|
+  failure_message_when_negated do |actual|
     "expected that the #{attribute} attribute would be invalid"
   end
 end
